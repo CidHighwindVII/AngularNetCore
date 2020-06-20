@@ -1,21 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using API.Extensions;
 using API.Helpers;
+using API.Middleware;
 using AutoMapper;
-using Core.Interfaces;
 using Infrastructure.Data;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace API
 {
@@ -31,24 +23,31 @@ namespace API
         // Dependencies injector containers
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
             services.AddDbContext<StoreContext>(x => x.UseSqlite(
                 _config.GetConnectionString("DefaultConnection")
             ));
+
+            services.AddApplicationServices();
+            services.AddSwaggerDocumentation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         // Where we add middleware
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                // Sends a developer friendly development page
-                app.UseDeveloperExceptionPage();
-            }
+            // Our exception middleware
+            app.UseMiddleware<ExceptionMiddleware>();
+
+            //if (env.IsDevelopment())
+            //{
+            //    // Sends a developer friendly development page
+            //    app.UseDeveloperExceptionPage();
+            //}
+
+            // Adds a middleware for error handling
+            app.UseStatusCodePagesWithRedirects("/errors/{0}");
 
             // Redirects http calls to https endpoint
             app.UseHttpsRedirection();
@@ -61,6 +60,8 @@ namespace API
 
             // Dosen't do anything for now
             app.UseAuthorization();
+
+            app.UseSwaggerDocumentation();
 
             // Maps all our endpoints to our controllers so our api server knows where to send the request on to
             app.UseEndpoints(endpoints =>
