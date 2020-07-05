@@ -10,14 +10,14 @@ namespace Infrastructure.Data.Config
         {
             builder.Property(p => p.Id).IsRequired();
             builder.Property(p => p.Name).IsRequired().HasMaxLength(100);
-            builder.Property(p => p.Description).IsRequired().HasMaxLength(100);
+            builder.Property(p => p.Description).IsRequired().HasMaxLength(180);
             builder.Property(p => p.Price).HasColumnType("decimal(18,2)");
             builder.Property(p => p.PictureUrl).IsRequired();
-            
+
             // This is just an example, entity framework already manages this connections
-            builder.HasOne(p => p.Productbrand).WithMany()
+            builder.HasOne(b => b.ProductBrand).WithMany()
                 .HasForeignKey(p => p.ProductBrandId);
-            builder.HasOne(p => p.ProductType).WithMany()
+            builder.HasOne(t => t.ProductType).WithMany()
                 .HasForeignKey(p => p.ProductTypeId);
         }
     }

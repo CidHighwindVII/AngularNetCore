@@ -8,7 +8,7 @@ namespace API.Extensions
     {
         public static IServiceCollection AddSwaggerDocumentation(this IServiceCollection services)
         {
-            // For documenting the API
+            // For documenting the API            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SkiNet API", Version = "v1" });
@@ -19,9 +19,12 @@ namespace API.Extensions
 
         public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app)
         {
-            // For documenting the API
+            // For documenting the API            
             app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "SkyNet API v1"); });
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "SkiNet API v1");
+            });
 
             return app;
         }
