@@ -4,7 +4,6 @@ import { ShopService } from './shop.service';
 import { IProduct } from './../shared/Models/product';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ShopParams } from '../shared/Models/shopParams';
-import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-shop',
@@ -12,7 +11,7 @@ import { ThrowStmt } from '@angular/compiler';
   styleUrls: ['./shop.component.scss'],
 })
 export class ShopComponent implements OnInit {
-  @ViewChild('search', { static: true }) searchTerm: ElementRef;
+  @ViewChild('search', { static: false }) searchTerm: ElementRef;
   products: IProduct[];
   types: IType[];
   brands: IBrand[];
