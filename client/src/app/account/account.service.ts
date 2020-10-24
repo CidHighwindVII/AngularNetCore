@@ -1,6 +1,12 @@
 import { Router } from '@angular/router';
 import { IUser } from './../shared/Models/user';
-import { BehaviorSubject, of, ReplaySubject } from 'rxjs';
+import {
+  BehaviorSubject,
+  of,
+  ReplaySubject,
+  Observable,
+  ObservedValueOf,
+} from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
@@ -16,7 +22,7 @@ export class AccountService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  loadCurrentUser(token: string) {
+  loadCurrentUser(token: string): Observable<void> {
     if (token === null) {
       this.currentUserSource.next(null);
       return of(null);
@@ -35,7 +41,7 @@ export class AccountService {
     );
   }
 
-  login(values: any) {
+  login(values: any): Observable<void> {
     return this.http.post(this.baseUrl + 'account/login', values).pipe(
       map((user: IUser) => {
         if (user) {
@@ -46,7 +52,7 @@ export class AccountService {
     );
   }
 
-  register(values: any) {
+  register(values: any): Observable<void> {
     return this.http.post(this.baseUrl + 'account/register', values).pipe(
       map((user: IUser) => {
         if (user) {
@@ -57,13 +63,13 @@ export class AccountService {
     );
   }
 
-  logout() {
+  logout(): void {
     localStorage.removeItem('token');
     this.currentUserSource.next(null);
     this.router.navigateByUrl('/');
   }
 
-  checkEmailExists(email: string) {
+  checkEmailExists(email: string): Observable<object> {
     return this.http.get(this.baseUrl + 'account/emailexists?email=' + email);
   }
 }
