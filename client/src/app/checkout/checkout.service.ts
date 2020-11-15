@@ -18,11 +18,12 @@ export class CheckoutService {
     return this.http.post(this.baseUrl + 'orders', order);
   }
 
+  // Todo: user based Cart
   // Todo: Instead of sorting on the client, sort on the server.
   getDeliveryMethods(): Observable<IDeliveryMethod[]> {
     return this.http.get(this.baseUrl + 'orders/deliveryMethods').pipe(
       map((dm: IDeliveryMethod[]) => {
-        return dm.sort((a, b) => b.price - a.price);
+        return [].slice.call(dm).sort((a, b) => b.price - a.price);
       })
     );
   }

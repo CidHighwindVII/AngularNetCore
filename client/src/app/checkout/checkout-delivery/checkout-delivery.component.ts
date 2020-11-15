@@ -3,7 +3,6 @@ import { BasketService } from './../../basket/basket.service';
 import { CheckoutService } from './../checkout.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { IDeliveryMethod } from 'src/app/shared/Models/deliveryMethod';
 
 @Component({
   selector: 'app-checkout-delivery',
