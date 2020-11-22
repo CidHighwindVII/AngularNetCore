@@ -3,7 +3,20 @@
   // Use hover for the description of the existing attributes
   // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
   "version": "0.2.0",
-  "configurations": [
+  "configurations": [    
+    {
+      "name": "Launch Chrome",
+      "request": "launch",
+      "type": "pwa-chrome",
+      "url": "https://localhost:4200",
+      "webRoot": "${workspaceFolder}\\client"
+    },
+    {
+      "command": "cd \"C:\\Users\\cmleite\\Desktop\\dotnet Angular\\AngularNetCore\\client\" && npm start",
+      "name": "Run npm start",
+      "request": "launch",
+      "type": "node-terminal"
+    },
     {
       "name": ".NET Core Launch (web)",
       "type": "coreclr",
