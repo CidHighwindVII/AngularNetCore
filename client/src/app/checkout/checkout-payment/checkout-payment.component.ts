@@ -41,6 +41,7 @@ export class CheckoutPaymentComponent implements OnInit {
       }
     );
   }
+
   private getOrderToCreate(basket: IBasket) {
     return {
       basketId: basket.id,
