@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { IProduct } from './../shared/Models/product';
 import { ShopParams } from './../shared/Models/shopParams';
 import { IBrand } from '../shared/Models/brand';
@@ -12,7 +13,7 @@ import { map, delay } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ShopService {
-  baseUrl = 'https://localhost:5001/api/';
+  baseUrl = environment.apiUrl;
   products: IProduct[] = [];
   brands: IBrand[] = [];
   types: IType[] = [];
